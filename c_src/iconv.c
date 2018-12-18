@@ -114,9 +114,24 @@ static ERL_NIF_TERM convert(ErlNifEnv* env, int argc,
     return enif_make_badarg(env);
 }
 
+static int reload(ErlNifEnv* env, void** priv, ERL_NIF_TERM info)
+{
+    return 0;
+}
+
+static int upgrade(ErlNifEnv* env, void** priv, void** old_priv, ERL_NIF_TERM info)
+{
+    return 0;
+}
+
+static void unload(ErlNifEnv* env, void* priv)
+{
+    return;
+}
+
 static ErlNifFunc nif_funcs[] =
     {
 	{"convert", 3, convert}
     };
 
-ERL_NIF_INIT(iconv, nif_funcs, load, NULL, NULL, NULL)
+ERL_NIF_INIT(iconv, nif_funcs, load, reload, upgrade, unload)

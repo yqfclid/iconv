@@ -52,8 +52,13 @@ load_nif(_LibDir) ->
 
 -spec convert(iodata(), iodata(), iodata()) -> binary().
 
-convert(_From, _To, _String) ->
-    erlang:nif_error(nif_not_loaded).
+convert(From, To, String) ->
+    case load_nif() of
+        ok ->
+            convert(From, To, String);
+        Err ->
+            erlang:nif_error(Err)
+    end.
 
 %%%===================================================================
 %%% Unit tests
