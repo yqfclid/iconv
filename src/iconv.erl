@@ -26,6 +26,7 @@
 -author('alexey@process-one.net').
 
 -compile(no_native).
+-on_load(load_nif/0).
 
 -export([load_nif/0, load_nif/1, convert/3]).
 
@@ -52,13 +53,8 @@ load_nif(_LibDir) ->
 
 -spec convert(iodata(), iodata(), iodata()) -> binary().
 
-convert(From, To, String) ->
-    case load_nif() of
-        ok ->
-            convert(From, To, String);
-        Err ->
-            erlang:nif_error(Err)
-    end.
+convert(_From, _To, _String) ->
+    erlang:nif_error(nif_not_loaded).
 
 %%%===================================================================
 %%% Unit tests
